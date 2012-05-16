@@ -1,4 +1,5 @@
-*.class
+# sbt project information
+target
 
 # Package Files #
 *.jar
