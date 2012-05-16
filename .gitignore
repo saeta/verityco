@@ -4,6 +4,7 @@ target
 # Eclipse configuration files
 .classpath
 .project
+.cache
 
 # Package Files #
 *.jar
