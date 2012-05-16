@@ -1,6 +1,10 @@
 # sbt project information
 target
 
+# Eclipse configuration files
+.classpath
+.project
+
 # Package Files #
 *.jar
 *.war
