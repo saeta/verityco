@@ -9,3 +9,6 @@ resolvers +=  "Typesafe Repository" at "http://repo.typesafe.com/typesafe/releas
 libraryDependencies += "com.typesafe.akka" % "akka-actor" % "2.0.1"
 
 libraryDependencies += "org.ow2.asm" % "asm-parent" % "4.0"
+
+libraryDependencies += "org.specs2" %% "specs2" % "1.10" % "test"
+
