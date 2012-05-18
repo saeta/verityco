@@ -1,4 +1,4 @@
-package verityco;
+package verityco.hw;
 
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.commons.AdviceAdapter;
@@ -6,7 +6,7 @@ import org.objectweb.asm.commons.AdviceAdapter;
 public class HWMethodVisitor extends AdviceAdapter {
 
   public static final void foo() {
-    System.out.println("Hello world!");
+    System.out.println("Entering Receive block.");
   }
 
   public HWMethodVisitor(int access, String name, String desc, MethodVisitor mv) {

@@ -5,7 +5,7 @@ import java.io.IOException;
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassWriter;
 
-import verityco.HWClassVisitor;
+import verityco.hw.HWClassVisitor;
 
 public class TestClassLoader extends ClassLoader {
   private final String className;
@@ -17,6 +17,7 @@ public class TestClassLoader extends ClassLoader {
     this.className = classname;
   }
 
+  @SuppressWarnings({ "unchecked", "rawtypes" })
   @Override
   public Class loadClass(String name) throws ClassNotFoundException {
     if (className.equals(name)) {

@@ -1,4 +1,4 @@
-package verityco;
+package verityco.hw;
 
 public class FooWithVarsImpl implements FooWithVars {
 
@@ -18,7 +18,7 @@ public class FooWithVarsImpl implements FooWithVars {
   @Override
   public void foo() {
     Var varz = new Var();
-    // Load
+    // Store
     varz.a = 2;
     // Load and Store
     varz.b = varz.a;
@@ -31,6 +31,7 @@ public class FooWithVarsImpl implements FooWithVars {
     // 2 stores and load
     varzBar.a = 42;
     varzBar.b = 45;
+    @SuppressWarnings("unused")
     int hello = varzBar.a + varzBar.b;
     baz();
   }

@@ -1,4 +1,4 @@
-package verityco;
+package verityco.hw;
 
 public interface Foo {
 

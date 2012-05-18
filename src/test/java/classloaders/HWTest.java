@@ -3,8 +3,8 @@ package classloaders;
 import org.junit.Before;
 import org.junit.Test;
 
-import verityco.Foo;
-import verityco.FooWithVars;
+import verityco.hw.Foo;
+import verityco.hw.FooWithVars;
 
 public class HWTest {
 
@@ -14,12 +14,13 @@ public class HWTest {
   private Foo foo;
   private FooWithVars fooWithVars;
 
+  @SuppressWarnings("unchecked")
   @Before
   public void setUp() throws Exception {
-    Class cc = loadClass(TEST_CLASS);
-    Class cc2 = loadClass(TEST_CLASS2);
-    foo = (Foo) cc.newInstance();
-    fooWithVars = (FooWithVars) cc2.newInstance();
+    Class<Foo> cc = loadClass(TEST_CLASS);
+    Class<FooWithVars> cc2 = loadClass(TEST_CLASS2);
+    foo = cc.newInstance();
+    fooWithVars = cc2.newInstance();
   }
 
   @Test
@@ -34,6 +35,7 @@ public class HWTest {
     fooWithVars.foo();
   }
 
+  @SuppressWarnings("rawtypes")
   private Class loadClass(final String className) throws ClassNotFoundException {
     ClassLoader cl = new TestClassLoader(getClass().getClassLoader(), className);
     return cl.loadClass(className);
