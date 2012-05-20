@@ -7,9 +7,6 @@ import org.objectweb.asm.Opcodes;
 public class VClassVisitor extends ClassVisitor {
 	public boolean visitingActor = false;
 	
-	public static void visitingActorMethod() {
-		System.out.println("We are in an actor method.");
-	}
 	
 	public VClassVisitor(ClassVisitor cv) {
 		super(Opcodes.ASM4, cv);
@@ -19,7 +16,7 @@ public class VClassVisitor extends ClassVisitor {
 	public void visit(int version, int access, String name, String signature,
 			String superName, String[] interfaces) {
 		cv.visit(version, access, name, signature, superName, interfaces);
-		if (name.equals("akka/actor/Actor") || superName.equals("akka/actor/UntypedActor")) {
+		if (superName.equals("akka/actor/UntypedActor")) {
 			visitingActor = true;
 		}
 	}
@@ -30,9 +27,11 @@ public class VClassVisitor extends ClassVisitor {
 		MethodVisitor mv = cv.visitMethod(access, name, desc, signature,
 				exceptions);
 		if (name.equals("<init>") && visitingActor) {
-			mv.visitMethodInsn(Opcodes.INVOKESTATIC, "verityco/VClassVisitor", "visitingActorMethod", "()V");
+			
+			mv = new ThreadStateVisitor(access, name, desc, mv);
 		} else if (name.equals("onReceive")) {
-			mv.visitMethodInsn(Opcodes.INVOKESTATIC, "verityco/VClassVisitor", "visitingActorMethod", "()V");
+			mv = new ThreadStateVisitor(access, name, desc, mv);
+			mv = new OwnershipVisitor(access, name, desc, mv);
 		}
 		
 		mv = new LoadStoreVisitor(mv); // Always instrument load/stores last.
