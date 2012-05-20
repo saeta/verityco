@@ -15,6 +15,6 @@ public class HWMethodVisitor extends AdviceAdapter {
 
   @Override
   protected void onMethodEnter() {
-    mv.visitMethodInsn(INVOKESTATIC, "verityco/HWMethodVisitor", "foo", "()V");
+    mv.visitMethodInsn(INVOKESTATIC, "verityco/hw/HWMethodVisitor", "foo", "()V");
   }
 }

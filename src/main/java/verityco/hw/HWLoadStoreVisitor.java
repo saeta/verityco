@@ -29,17 +29,17 @@ public class HWLoadStoreVisitor extends MethodVisitor {
   public void visitFieldInsn(int opcode, String owner, String name, String desc) {
     if (opcode == Opcodes.GETFIELD) {
       mv.visitInsn(Opcodes.DUP);
-      mv.visitMethodInsn(Opcodes.INVOKESTATIC, "verityco/HWLoadStoreVisitor",
+      mv.visitMethodInsn(Opcodes.INVOKESTATIC, "verityco/hw/HWLoadStoreVisitor",
           "load", "(Ljava/lang/Object;)V");
     } else if (opcode == Opcodes.GETSTATIC) {
-      mv.visitMethodInsn(Opcodes.INVOKESTATIC, "verityco/HWLoadStoreVisitor",
+      mv.visitMethodInsn(Opcodes.INVOKESTATIC, "verityco/hw/HWLoadStoreVisitor",
           "loadStatic", "()V");
     } else if (opcode == Opcodes.PUTSTATIC) {
-      mv.visitMethodInsn(Opcodes.INVOKESTATIC, "verityco/HWLoadStoreVisitor",
+      mv.visitMethodInsn(Opcodes.INVOKESTATIC, "verityco/hw/HWLoadStoreVisitor",
           "storeStatic", "()V");
     } else {
       mv.visitInsn(Opcodes.DUP);
-      mv.visitMethodInsn(Opcodes.INVOKESTATIC, "verityco/HWLoadStoreVisitor",
+      mv.visitMethodInsn(Opcodes.INVOKESTATIC, "verityco/hw/HWLoadStoreVisitor",
           "store", "(Ljava/lang/Object;)V");
     }
     mv.visitFieldInsn(opcode, owner, name, desc);

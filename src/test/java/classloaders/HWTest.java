@@ -8,8 +8,8 @@ import verityco.hw.FooWithVars;
 
 public class HWTest {
 
-  private static final String TEST_CLASS = "verityco.FooImpl";
-  private static final String TEST_CLASS2 = "verityco.FooWithVarsImpl";
+  private static final String TEST_CLASS = "verityco.hw.FooImpl";
+  private static final String TEST_CLASS2 = "verityco.hw.FooWithVarsImpl";
 
   private Foo foo;
   private FooWithVars fooWithVars;
@@ -23,16 +23,16 @@ public class HWTest {
     fooWithVars = cc2.newInstance();
   }
 
-  @Test
   public void test() {
     System.out.println("WE DONE GONNA DO TEST 1");
     foo.foo();
+    System.out.println("=====TEST 1 DONE=====");
   }
 
-  @Test
   public void test2() {
     System.out.println("WE DONE GONNA DO TEST 2");
     fooWithVars.foo();
+    System.out.println("=====TEST 2 DONE=====");
   }
 
   @SuppressWarnings("rawtypes")

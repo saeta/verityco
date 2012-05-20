@@ -1,29 +1,32 @@
 package classloaders;
 
 import java.io.IOException;
+import java.util.Set;
 
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassWriter;
 
-import verityco.hw.HWClassVisitor;
+import verityco.VClassVisitor;
 
-public class TestClassLoader extends ClassLoader {
+public class VerityTestClassLoader extends ClassLoader {
   private final String className;
   private final ClassLoader cl;
-
-  public TestClassLoader(ClassLoader cl, String classname) {
+  private final Set<String> interfaces;
+  
+  public VerityTestClassLoader(ClassLoader cl, String classname, Set<String> interfaces) {
     super();
     this.cl = cl;
     this.className = classname;
+    this.interfaces = interfaces;
   }
 
   @SuppressWarnings({ "unchecked", "rawtypes" })
   @Override
   public Class loadClass(String name) throws ClassNotFoundException {
-    if (className.equals(name)) {
-      try {
-        byte[] bytecode = transformClass(className);
-        return super.defineClass(className, bytecode, 0, bytecode.length);
+    if (name.startsWith("atc") && !interfaces.contains(name)) {
+	  try {
+        byte[] bytecode = transformClass(name);
+        return super.defineClass(name, bytecode, 0, bytecode.length);
 
       } catch (IOException ex) {
         throw new ClassNotFoundException("Load error: " + ex.toString(), ex);
@@ -35,10 +38,11 @@ public class TestClassLoader extends ClassLoader {
 
   private byte[] transformClass(String className) throws IOException {
     ClassWriter cw = new ClassWriter(ClassWriter.COMPUTE_FRAMES);
-    HWClassVisitor ncv = new HWClassVisitor(cw);
+    VClassVisitor vcv = new VClassVisitor(cw);
+
     ClassReader cr = new ClassReader(getClass().getResourceAsStream(
         "/" + className.replace('.', '/') + ".class"));
-    cr.accept(ncv, ClassReader.SKIP_FRAMES);
+    cr.accept(vcv, ClassReader.SKIP_FRAMES);
     return cw.toByteArray();
   }
 

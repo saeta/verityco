@@ -15,7 +15,6 @@ public class HWClassVisitor extends ClassVisitor {
       String signature, String[] exceptions) {
     MethodVisitor mv = cv
         .visitMethod(access, name, desc, signature, exceptions);
-    // Chaining shit
     MethodVisitor mv2 = new HWMethodVisitor(access, name, desc, mv);
     return new HWLoadStoreVisitor(mv2);
   }
