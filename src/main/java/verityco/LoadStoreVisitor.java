@@ -40,10 +40,12 @@ public class LoadStoreVisitor extends MethodVisitor {
 			mv.visitMethodInsn(Opcodes.INVOKESTATIC,
 					"verityco/LoadStoreVisitor", "storeStatic", "()V");
 		} else {
+			mv.visitInsn(Opcodes.SWAP);
 			mv.visitInsn(Opcodes.DUP);
 			mv.visitMethodInsn(Opcodes.INVOKESTATIC,
 					"verityco/LoadStoreVisitor", "store",
 					"(Ljava/lang/Object;)V");
+			mv.visitInsn(Opcodes.SWAP);
 		}
 		mv.visitFieldInsn(opcode, owner, name, desc);
 	}

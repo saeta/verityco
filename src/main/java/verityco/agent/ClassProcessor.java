@@ -13,7 +13,7 @@ public class ClassProcessor {
       if (name.startsWith("java.util") || name.startsWith("java.lang")) {
         System.out.println(name + " is modifiable "
             + inst.isModifiableClass(inst.getAllLoadedClasses()[i]));
-        if (name.equals("java.util.HashMap")) {
+        if (name.equals("java.util.ArrayList")) {
           hashmapClass = inst.getAllLoadedClasses()[i];
         }
       }
@@ -31,7 +31,7 @@ public class ClassProcessor {
       // } catch (IOException e) {
       // System.out.println(":-(( SAD FACE!!!!!!!!!!!!!!");
       // e.printStackTrace();
-      // } catch (ClassNotFoundException e) {
+      //  catch (ClassNotFoundException e) {
       // System.out.println(":-((( SAD FACE!!!!!!!!!!!!!!");
       e.printStackTrace();
     }
