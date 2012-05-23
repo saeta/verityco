@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<jardesc>
+    <jar path="/tmp/Agent.jar"/>
+    <options buildIfNeeded="true" compress="true" descriptionLocation="/verityco/jardesc.jardesc" exportErrors="true" exportWarnings="true" includeDirectoryEntries="false" overwrite="false" saveDescription="true" storeRefactorings="false" useSourceFolders="false"/>
+    <storedRefactorings deprecationInfo="true" structuralOnly="false"/>
+    <selectedProjects/>
+    <manifest generateManifest="false" manifestLocation="/verityco/mymanifest.mf" manifestVersion="1.0" reuseManifest="false" saveManifest="true" usesManifest="true">
+        <sealing sealJar="false">
+            <packagesToSeal/>
+            <packagesToUnSeal/>
+        </sealing>
+    </manifest>
+    <selectedElements exportClassFiles="true" exportJavaFiles="false" exportOutputFolder="false">
+        <javaElement handleIdentifier="=verityco/src\/test\/scala"/>
+        <javaElement handleIdentifier="=verityco/src\/test\/java"/>
+        <folder path="/verityco/lib"/>
+        <javaElement handleIdentifier="=verityco/src\/main\/scala"/>
+        <folder path="/verityco/src"/>
+        <javaElement handleIdentifier="=verityco/src\/main\/java"/>
+    </selectedElements>
+</jardesc>

@@ -1,0 +1,4 @@
+Manifest-Version: 1.0
+Premain-Class: verityco.agent.ClassProcessor
+Class-Path: ./lib/asm-commons-4.0.jar ./lib/asm-4.0.jar
+Can-Retransform-Classes: true
