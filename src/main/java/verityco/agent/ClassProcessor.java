@@ -10,12 +10,13 @@ public class ClassProcessor {
     Class hashmapClass = null;
     for (int i = 0; i < inst.getAllLoadedClasses().length; i++) {
       String name = inst.getAllLoadedClasses()[i].getName();
-      if (name.startsWith("java.util") || name.startsWith("java.lang")) {
-        System.out.println(name + " is modifiable "
+      //if (name.startsWith("java.util") || name.startsWith("java.lang")) {
+      	if (name.startsWith("java.io")) {
+      	  System.out.println(name + " is modifiable "
             + inst.isModifiableClass(inst.getAllLoadedClasses()[i]));
-        if (name.equals("java.util.ArrayList")) {
-          hashmapClass = inst.getAllLoadedClasses()[i];
-        }
+          if (name.equals("java.io.StringReader")) {
+            hashmapClass = inst.getAllLoadedClasses()[i];
+          }
       }
     }
     ClassTransformer ct = new ClassTransformer();
@@ -31,7 +32,7 @@ public class ClassProcessor {
       // } catch (IOException e) {
       // System.out.println(":-(( SAD FACE!!!!!!!!!!!!!!");
       // e.printStackTrace();
-      //  catch (ClassNotFoundException e) {
+      // } catch (ClassNotFoundException e) {
       // System.out.println(":-((( SAD FACE!!!!!!!!!!!!!!");
       e.printStackTrace();
     }
