@@ -1,10 +1,6 @@
 package classloaders;
 
-import static org.junit.Assert.*;
-
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import org.junit.Before;
@@ -34,6 +30,7 @@ public class ClassVisitorTest {
     System.out.println("=====TEST SIMPLE ACTOR DONE=====");
   }
 
+  @SuppressWarnings("rawtypes")
   private Class loadClass(final String className) throws ClassNotFoundException {
     ClassLoader cl = new VerityTestClassLoader(getClass().getClassLoader(),
         className, interfaceSet);

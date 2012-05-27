@@ -9,15 +9,12 @@ import org.objectweb.asm.ClassWriter;
 import verityco.VClassVisitor;
 
 public class VerityTestClassLoader extends ClassLoader {
-  private final String className;
   private final ClassLoader cl;
   private final Set<String> interfaces;
 
-  public VerityTestClassLoader(ClassLoader cl, String classname,
-      Set<String> interfaces) {
+  public VerityTestClassLoader(ClassLoader cl, Set<String> interfaces) {
     super();
     this.cl = cl;
-    this.className = classname;
     this.interfaces = interfaces;
   }
 
