@@ -1,16 +1,16 @@
 package classloaders;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-
 import java.util.HashSet;
 import java.util.Set;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import verityco.logic.Panopticon;
 import verityco.util.Reporter;
 import atc.TestActorDriver;
+
+import static org.mockito.Mockito.*;
 
 public class ClassVisitorTest {
   private static final Set<String> interfaceSet = new HashSet<String>();
@@ -37,6 +37,18 @@ public class ClassVisitorTest {
     test.run();
 
     verify(r).info("Hello world");
+  }
+
+  @Test
+  public void basicPanopticon() throws Exception {
+    Panopticon p = mock(Panopticon.class);
+    Panopticon.panopticon = p;
+    TestActorDriver test = loadClass("atc.BasicPanopticon").newInstance();
+    test.run();
+
+    verify(p).loadStatic(); // Loading of System.out
+    verifyNoMoreInteractions(p);
+
   }
 
   @SuppressWarnings("unchecked")
