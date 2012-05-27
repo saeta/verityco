@@ -21,4 +21,11 @@ public class Panopticon {
     Reporter.report.report("Static write of object ");
   }
 
+  public void setThreadStateToActor(Object obj) {
+    Reporter.report.report("We are in an actor method.");
+  }
+
+  public void setThreadStateToThread() {
+    Reporter.report.report("We are leaving an actor method.");
+  }
 }

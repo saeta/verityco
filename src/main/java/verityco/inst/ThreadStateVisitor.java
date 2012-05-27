@@ -4,17 +4,7 @@ import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.commons.AdviceAdapter;
 
-import verityco.util.Reporter;
-
 public class ThreadStateVisitor extends AdviceAdapter {
-
-  public static void setThreadStateToActor(Object obj) {
-    Reporter.report.report("We are in an actor method.");
-  }
-
-  public static void setThreadStateToThread() {
-    Reporter.report.report("We are leaving an actor method.");
-  }
 
   public ThreadStateVisitor(int access, String name, String desc,
       MethodVisitor mv) {
@@ -23,15 +13,18 @@ public class ThreadStateVisitor extends AdviceAdapter {
 
   @Override
   public void onMethodEnter() {
+    mv.visitFieldInsn(Opcodes.GETSTATIC, "verityco/logic/Panopticon",
+        "panopticon", "Lverityco/logic/Panopticon;");
     mv.visitVarInsn(Opcodes.ALOAD, 0);
-    mv.visitMethodInsn(Opcodes.INVOKESTATIC,
-        "verityco/inst/ThreadStateVisitor", "setThreadStateToActor",
-        "(Ljava/lang/Object;)V");
+    mv.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "verityco/logic/Panopticon",
+        "setThreadStateToActor", "(Ljava/lang/Object;)V");
   }
 
   @Override
   public void onMethodExit(int opcode) {
-    mv.visitMethodInsn(Opcodes.INVOKESTATIC,
-        "verityco/inst/ThreadStateVisitor", "setThreadStateToThread", "()V");
+    mv.visitFieldInsn(Opcodes.GETSTATIC, "verityco/logic/Panopticon",
+        "panopticon", "Lverityco/logic/Panopticon;");
+    mv.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "verityco/logic/Panopticon",
+        "setThreadStateToThread", "()V");
   }
 }
