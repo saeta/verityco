@@ -7,7 +7,7 @@ import akka.actor.ActorRef;
 import akka.actor.ActorSystem;
 import akka.actor.Props;
 
-public class TestActorDriverImpl implements TestActorDriver {
+public class SimpleCase implements TestActorDriver {
   String helloWorld = "Hello World";
   String helloWorld2 = "Hello world";
   Integer a = new Integer(34);
@@ -22,10 +22,4 @@ public class TestActorDriverImpl implements TestActorDriver {
     system.shutdown();
     system.awaitTermination();
   }
-
-  public static void main(String[] args) {
-    TestActorDriverImpl tadi = new TestActorDriverImpl();
-    tadi.run();
-  }
-
 }

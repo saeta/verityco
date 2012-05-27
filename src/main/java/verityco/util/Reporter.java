@@ -8,4 +8,8 @@ public class Reporter {
     System.out.println(error);
   }
 
+  public void info(String informational) {
+    System.out.println(informational);
+  }
+
 }
