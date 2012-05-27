@@ -21,8 +21,7 @@ public class VerityTestClassLoader extends ClassLoader {
   @SuppressWarnings({ "unchecked", "rawtypes" })
   @Override
   public Class loadClass(String name) throws ClassNotFoundException {
-    if ((name.startsWith("atc") && !interfaces.contains(name))
-        || (name.equals("java.util.HashMap"))) {
+    if (name.startsWith("atc") && !interfaces.contains(name)) {
       try {
         byte[] bytecode = transformClass(name);
         return super.defineClass(name, bytecode, 0, bytecode.length);
