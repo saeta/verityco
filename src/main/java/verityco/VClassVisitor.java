@@ -34,6 +34,7 @@ public class VClassVisitor extends ClassVisitor {
     }
 
     mv = new LoadStoreVisitor(mv); // Always instrument load/stores last.
+    mv = new JavaCoreVisitor(mv); // Always instrument around the Java core
     return mv;
   }
 }
