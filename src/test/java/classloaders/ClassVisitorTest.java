@@ -33,7 +33,7 @@ public class ClassVisitorTest {
   @SuppressWarnings("rawtypes")
   private Class loadClass(final String className) throws ClassNotFoundException {
     ClassLoader cl = new VerityTestClassLoader(getClass().getClassLoader(),
-        className, interfaceSet);
+        interfaceSet);
     return cl.loadClass(className);
   }
 
