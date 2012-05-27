@@ -4,14 +4,16 @@ import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.commons.AdviceAdapter;
 
+import verityco.util.Reporter;
+
 public class ThreadStateVisitor extends AdviceAdapter {
 
   public static void setThreadStateToActor(Object obj) {
-    System.out.println("We are in an actor method.");
+    Reporter.report.report("We are in an actor method.");
   }
 
   public static void setThreadStateToThread() {
-    System.out.println("We are leaving an actor method.");
+    Reporter.report.report("We are leaving an actor method.");
   }
 
   public ThreadStateVisitor(int access, String name, String desc,

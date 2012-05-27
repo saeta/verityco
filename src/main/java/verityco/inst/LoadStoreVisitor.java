@@ -3,22 +3,24 @@ package verityco.inst;
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
 
+import verityco.util.Reporter;
+
 public class LoadStoreVisitor extends MethodVisitor {
 
   public static final void load(Object o) {
-    System.out.println("Loading object " + o);
+    Reporter.report.report("Loading object " + o);
   }
 
   public static final void loadStatic() {
-    System.out.println("Static load of object ");
+    Reporter.report.report("Static load of object ");
   }
 
   public static final void store(Object o) {
-    System.out.println("Storing object " + o);
+    Reporter.report.report("Storing object " + o);
   }
 
   public static final void storeStatic() {
-    System.out.println("Static write of object ");
+    Reporter.report.report("Static write of object ");
   }
 
   public LoadStoreVisitor(MethodVisitor mv) {

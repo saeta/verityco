@@ -4,10 +4,12 @@ import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.commons.AdviceAdapter;
 
+import verityco.util.Reporter;
+
 public class OwnershipVisitor extends AdviceAdapter {
 
   public static void setOwnership(Object actor, Object item) {
-    System.out.println("We are ownering " + item + " with acto " + actor);
+    Reporter.report.report("We are ownering " + item + " with acto " + actor);
   }
 
   public OwnershipVisitor(int access, String name, String desc, MethodVisitor mv) {
