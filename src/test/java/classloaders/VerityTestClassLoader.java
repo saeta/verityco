@@ -12,8 +12,9 @@ public class VerityTestClassLoader extends ClassLoader {
   private final String className;
   private final ClassLoader cl;
   private final Set<String> interfaces;
-  
-  public VerityTestClassLoader(ClassLoader cl, String classname, Set<String> interfaces) {
+
+  public VerityTestClassLoader(ClassLoader cl, String classname,
+      Set<String> interfaces) {
     super();
     this.cl = cl;
     this.className = classname;
@@ -23,8 +24,9 @@ public class VerityTestClassLoader extends ClassLoader {
   @SuppressWarnings({ "unchecked", "rawtypes" })
   @Override
   public Class loadClass(String name) throws ClassNotFoundException {
-    if ((name.startsWith("atc") && !interfaces.contains(name)) || (name.equals("java.util.HashMap"))) {
-	  try {
+    if ((name.startsWith("atc") && !interfaces.contains(name))
+        || (name.equals("java.util.HashMap"))) {
+      try {
         byte[] bytecode = transformClass(name);
         return super.defineClass(name, bytecode, 0, bytecode.length);
 

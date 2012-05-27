@@ -2,7 +2,9 @@ package verityco.hw;
 
 public class FooImpl implements Foo {
 
-  /* (non-Javadoc)
+  /*
+   * (non-Javadoc)
+   * 
    * @see verityco.Foo#foo()
    */
   @Override
@@ -11,7 +13,9 @@ public class FooImpl implements Foo {
     bar();
   }
 
-  /* (non-Javadoc)
+  /*
+   * (non-Javadoc)
+   * 
    * @see verityco.Foo#bar()
    */
   @Override
@@ -20,7 +24,9 @@ public class FooImpl implements Foo {
     baz();
   }
 
-  /* (non-Javadoc)
+  /*
+   * (non-Javadoc)
+   * 
    * @see verityco.Foo#baz()
    */
   @Override
