@@ -1,4 +1,4 @@
-package verityco;
+package verityco.inst;
 
 import akka.actor.ActorRef;
 

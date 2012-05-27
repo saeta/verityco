@@ -1,4 +1,4 @@
-package verityco;
+package verityco.inst;
 
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
@@ -22,13 +22,14 @@ public class ThreadStateVisitor extends AdviceAdapter {
   @Override
   public void onMethodEnter() {
     mv.visitVarInsn(Opcodes.ALOAD, 0);
-    mv.visitMethodInsn(Opcodes.INVOKESTATIC, "verityco/ThreadStateVisitor",
-        "setThreadStateToActor", "(Ljava/lang/Object;)V");
+    mv.visitMethodInsn(Opcodes.INVOKESTATIC,
+        "verityco/inst/ThreadStateVisitor", "setThreadStateToActor",
+        "(Ljava/lang/Object;)V");
   }
 
   @Override
   public void onMethodExit(int opcode) {
-    mv.visitMethodInsn(Opcodes.INVOKESTATIC, "verityco/ThreadStateVisitor",
-        "setThreadStateToThread", "()V");
+    mv.visitMethodInsn(Opcodes.INVOKESTATIC,
+        "verityco/inst/ThreadStateVisitor", "setThreadStateToThread", "()V");
   }
 }

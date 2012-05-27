@@ -7,7 +7,7 @@ import java.security.ProtectionDomain;
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassWriter;
 
-import verityco.VClassVisitor;
+import verityco.inst.VClassVisitor;
 
 public class ClassTransformer implements ClassFileTransformer {
 

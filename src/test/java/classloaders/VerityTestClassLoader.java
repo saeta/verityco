@@ -6,7 +6,7 @@ import java.util.Set;
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassWriter;
 
-import verityco.VClassVisitor;
+import verityco.inst.VClassVisitor;
 
 public class VerityTestClassLoader extends ClassLoader {
   private final ClassLoader cl;

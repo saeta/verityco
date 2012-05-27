@@ -1,4 +1,4 @@
-package verityco;
+package verityco.inst;
 
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
@@ -18,7 +18,7 @@ public class OwnershipVisitor extends AdviceAdapter {
   public void onMethodEnter() {
     mv.visitVarInsn(Opcodes.ALOAD, 0);
     mv.visitVarInsn(Opcodes.ALOAD, 1);
-    mv.visitMethodInsn(Opcodes.INVOKESTATIC, "verityco/OwnershipVisitor",
+    mv.visitMethodInsn(Opcodes.INVOKESTATIC, "verityco/inst/OwnershipVisitor",
         "setOwnership", "(Ljava/lang/Object;Ljava/lang/Object;)V");
   }
 }
