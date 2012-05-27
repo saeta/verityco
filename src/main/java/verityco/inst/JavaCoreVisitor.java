@@ -56,18 +56,27 @@ public class JavaCoreVisitor extends MethodVisitor {
         if (types.length == 1) {
           mv.visitInsn(Opcodes.DUP2);
           mv.visitInsn(Opcodes.POP);
-          mv.visitMethodInsn(Opcodes.INVOKESTATIC,
-              "verityco/inst/LoadStoreVisitor", method, "(Ljava/lang/Object;)V");
+          mv.visitFieldInsn(Opcodes.GETSTATIC, "verityco/logic/Panopticon",
+              "panopticon", "Lverityco/logic/Panopticon;");
+          mv.visitInsn(Opcodes.SWAP);
+          mv.visitMethodInsn(Opcodes.INVOKEVIRTUAL,
+              "verityco/logic/Panopticon", method, "(Ljava/lang/Object;)V");
         } else if (types.length == 2) {
           mv.visitInsn(Opcodes.DUP2_X1);
           mv.visitInsn(Opcodes.POP2);
           mv.visitInsn(Opcodes.DUP_X2);
-          mv.visitMethodInsn(Opcodes.INVOKESTATIC,
-              "verityco/inst/LoadStoreVisitor", method, "(Ljava/lang/Object;)V");
+          mv.visitFieldInsn(Opcodes.GETSTATIC, "verityco/logic/Panopticon",
+              "panopticon", "Lverityco/logic/Panopticon;");
+          mv.visitInsn(Opcodes.SWAP);
+          mv.visitMethodInsn(Opcodes.INVOKEVIRTUAL,
+              "verityco/logic/Panopticon", method, "(Ljava/lang/Object;)V");
         } else if (types.length == 0) {
           mv.visitInsn(Opcodes.DUP);
-          mv.visitMethodInsn(Opcodes.INVOKESTATIC,
-              "verityco/inst/LoadStoreVisitor", method, "(Ljava/lang/Object;)V");
+          mv.visitFieldInsn(Opcodes.GETSTATIC, "verityco/logic/Panopticon",
+              "panopticon", "Lverityco/logic/Panopticon;");
+          mv.visitInsn(Opcodes.SWAP);
+          mv.visitMethodInsn(Opcodes.INVOKEVIRTUAL,
+              "verityco/logic/Panopticon", method, "(Ljava/lang/Object;)V");
         } else {
           System.out.println("Help!!!! I couldn't instrument this method!");
         }
