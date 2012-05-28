@@ -1,13 +1,11 @@
 package verityco.inst;
 
-import akka.actor.ActorRef;
-
 public class ThreadState {
 
-  public static final ThreadLocal<ActorRef> threadState = new ThreadLocal<ActorRef>() {
+  public static final ThreadLocal<Object> threadState = new ThreadLocal<Object>() {
 
     @Override
-    protected ActorRef initialValue() {
+    protected Object initialValue() {
       return null;
     }
   };
