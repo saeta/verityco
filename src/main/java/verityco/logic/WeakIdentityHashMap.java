@@ -44,6 +44,7 @@ import java.util.Set;
  * 
  * Note that this implementation is not synchronized. </b>
  */
+@SuppressWarnings("rawtypes")
 public class WeakIdentityHashMap<K, V> implements Map<K, V> {
   private final ReferenceQueue<K> queue = new ReferenceQueue<K>();
   private final Map<IdentityWeakReference, V> backingStore = new HashMap<IdentityWeakReference, V>();

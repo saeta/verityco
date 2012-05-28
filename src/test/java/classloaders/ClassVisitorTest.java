@@ -20,6 +20,7 @@ public class ClassVisitorTest {
   @BeforeClass
   static public void init() throws Exception {
     interfaceSet.add("atc.TestActorDriver");
+    interfaceSet.add("atc.TestActorDriverExtended");
   }
 
   @Test
