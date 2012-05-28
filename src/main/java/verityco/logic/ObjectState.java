@@ -1,25 +1,43 @@
 package verityco.logic;
 
+import verityco.util.Reporter;
+
 public class ObjectState {
+  // Note: a weak reference to the pointed-to object is not maintained for space
+  // efficiency reasons.
   ObjectStateEnum state = ObjectStateEnum.PRISTINE;
   Object owningActor = null;
 
-  public void write(Object writingActor) {
+  /**
+   * Check the state for a write in this object.
+   * 
+   * @param writingActor
+   *          Actor doing write.
+   * @param obj
+   *          Passed in for error reporting
+   */
+  public void write(Object writingActor, Object obj) {
     if (state == ObjectStateEnum.PRISTINE || state == ObjectStateEnum.READ
         || state == ObjectStateEnum.WRITE) {
       if (owningActor == writingActor) {
         state = ObjectStateEnum.WRITE;
       } else {
-        // Error!!!
+        if (state == ObjectStateEnum.WRITE) {
+          Reporter.report.reportWriteWriteConflict(writingActor, owningActor,
+              obj);
+        } else {
+          Reporter.report.reportReadWriteConflict(writingActor, owningActor,
+              obj);
+        }
       }
     } else if (state == ObjectStateEnum.MULTIREAD) {
-      // Error
+      Reporter.report.reportMultiReadWriteConflict(writingActor, obj);
     } else if (state == ObjectStateEnum.ERROR) {
       // Do nothing; error suppression
     }
   }
 
-  public void read(Object readingActor) {
+  public void read(Object readingActor, Object obj) {
     if (state == ObjectStateEnum.PRISTINE || state == ObjectStateEnum.READ) {
       if (owningActor == readingActor) {
         state = ObjectStateEnum.READ;
@@ -30,7 +48,7 @@ public class ObjectState {
       if (owningActor == readingActor) {
         // Do nothing
       } else {
-        // Error
+        Reporter.report.reportWriteReadConflict(readingActor, owningActor, obj);
       }
     } else if (state == ObjectStateEnum.MULTIREAD) {
       // all good

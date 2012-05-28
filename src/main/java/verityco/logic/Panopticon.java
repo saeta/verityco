@@ -9,10 +9,10 @@ public class Panopticon {
   public void load(Object o) {
     if (ThreadState.threadState.get() != null) {
       if (objects.containsKey(o)) {
-        objects.get(o).read(ThreadState.threadState.get());
+        objects.get(o).read(ThreadState.threadState.get(), o);
       } else {
         ObjectState os = new ObjectState();
-        os.read(ThreadState.threadState.get());
+        os.read(ThreadState.threadState.get(), o);
         objects.put(o, os);
       }
     }
@@ -25,10 +25,10 @@ public class Panopticon {
   public void store(Object o) {
     if (ThreadState.threadState.get() != null) {
       if (objects.containsKey(o)) {
-        objects.get(o).write(ThreadState.threadState.get());
+        objects.get(o).write(ThreadState.threadState.get(), o);
       } else {
         ObjectState os = new ObjectState();
-        os.write(ThreadState.threadState.get());
+        os.write(ThreadState.threadState.get(), o);
         objects.put(o, os);
       }
     }
