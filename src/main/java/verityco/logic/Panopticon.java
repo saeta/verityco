@@ -1,12 +1,21 @@
 package verityco.logic;
 
+import verityco.inst.ThreadState;
 import verityco.util.Reporter;
 
 public class Panopticon {
   public static Panopticon panopticon = new Panopticon();
 
   public void load(Object o) {
-    Reporter.report.report("Loading object " + o);
+    if (ThreadState.threadState.get() != null) {
+      if (objects.containsKey(o)) {
+        objects.get(o).read(ThreadState.threadState.get());
+      } else {
+        ObjectState os = new ObjectState();
+        os.read(ThreadState.threadState.get());
+        objects.put(o, os);
+      }
+    }
   }
 
   public void loadStatic() {
@@ -14,7 +23,15 @@ public class Panopticon {
   }
 
   public void store(Object o) {
-    Reporter.report.report("Storing object " + o);
+    if (ThreadState.threadState.get() != null) {
+      if (objects.containsKey(o)) {
+        objects.get(o).write(ThreadState.threadState.get());
+      } else {
+        ObjectState os = new ObjectState();
+        os.write(ThreadState.threadState.get());
+        objects.put(o, os);
+      }
+    }
   }
 
   public void storeStatic() {
@@ -22,10 +39,13 @@ public class Panopticon {
   }
 
   public void setThreadStateToActor(Object obj) {
-    Reporter.report.report("We are in an actor method.");
+    ThreadState.threadState.set(obj);
   }
 
   public void setThreadStateToThread() {
-    Reporter.report.report("We are leaving an actor method.");
+    ThreadState.threadState.set(null);
   }
+
+  WeakIdentityHashMap<Object, ObjectState> objects = new WeakIdentityHashMap<Object, ObjectState>();
+
 }
