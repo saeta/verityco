@@ -7,7 +7,7 @@ import akka.util.duration._
 import akka.util.Timeout
 import akka.dispatch.Await
 
-class TestingActor extends UntypedActor {
+class BATTestingActor extends UntypedActor {
   override def onReceive(o: Any): Unit = o match {
     case s: String => // Do nothing
     case m: java.util.Map[String, String] =>
@@ -25,7 +25,7 @@ class BasicActorThreading extends TestActorDriver {
     implicit val as = ActorSystem("basic-factor-testing")
     Reporter.report.info("Created actor system.")
 
-    val actor = TestActorRef[TestingActor]
+    val actor = TestActorRef[BATTestingActor]
     actor.tell("hello world")
     Reporter.report.info("Just finished telling.")
 
@@ -34,26 +34,6 @@ class BasicActorThreading extends TestActorDriver {
     Reporter.report.info("Got back: " + res)
     as.shutdown() // Prevent leak of threads / memory
     Reporter.report.info("Done.")
-  }
-
-  def run1() = {
-    Reporter.report.info("Beginning.")
-    val as = ActorSystem("basic-factor-testing")
-    Reporter.report.info("Created actor system.")
-
-    val actor = as.actorOf(Props(new UntypedActor {
-      override def onReceive(o: Any): Unit = o match {
-        case m: java.util.Map[String, String] =>
-          Reporter.report.info("Received.")
-          m.put("Hello", "world")
-          sender ! "Hi"
-      }
-    }))
-    val future = actor ? new java.util.HashMap[String, String]()
-    future.map {
-      case None => "foo"
-    }
-
   }
 
 }
