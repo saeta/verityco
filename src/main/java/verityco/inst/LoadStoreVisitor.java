@@ -12,22 +12,14 @@ public class LoadStoreVisitor extends MethodVisitor {
   @Override
   public void visitFieldInsn(int opcode, String owner, String name, String desc) {
     if (opcode == Opcodes.GETFIELD) {
+      // GETFIELD
       mv.visitFieldInsn(Opcodes.GETSTATIC, "verityco/logic/Panopticon",
           "panopticon", "Lverityco/logic/Panopticon;");
       mv.visitInsn(Opcodes.DUP);
       mv.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "verityco/logic/Panopticon",
           "load", "(Ljava/lang/Object;)V");
-    } else if (opcode == Opcodes.GETSTATIC) {
-      mv.visitFieldInsn(Opcodes.GETSTATIC, "verityco/logic/Panopticon",
-          "panopticon", "Lverityco/logic/Panopticon;");
-      mv.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "verityco/logic/Panopticon",
-          "loadStatic", "()V");
-    } else if (opcode == Opcodes.PUTSTATIC) {
-      mv.visitFieldInsn(Opcodes.GETSTATIC, "verityco/logic/Panopticon",
-          "panopticon", "Lverityco/logic/Panopticon;");
-      mv.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "verityco/logic/Panopticon",
-          "storeStatic", "()V");
-    } else {
+    } else if (opcode == Opcodes.PUTFIELD) {
+      // PUTFIELD
       mv.visitInsn(Opcodes.SWAP);
       mv.visitInsn(Opcodes.DUP);
       mv.visitFieldInsn(Opcodes.GETSTATIC, "verityco/logic/Panopticon",
@@ -37,6 +29,7 @@ public class LoadStoreVisitor extends MethodVisitor {
           "store", "(Ljava/lang/Object;)V");
       mv.visitInsn(Opcodes.SWAP);
     }
+    // Do the operation
     mv.visitFieldInsn(opcode, owner, name, desc);
   }
 }
