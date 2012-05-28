@@ -5,10 +5,12 @@ import java.util.Set;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.mockito.InOrder;
 
 import verityco.logic.Panopticon;
 import verityco.util.Reporter;
 import atc.TestActorDriver;
+import static org.mockito.Matchers.anyObject;
 
 import static org.mockito.Mockito.*;
 
@@ -48,6 +50,26 @@ public class ClassVisitorTest {
 
     verify(p).loadStatic(); // Loading of System.out
     verifyNoMoreInteractions(p);
+
+  }
+
+  @Test
+  public void basicActorThreading() throws Exception {
+    Panopticon p = mock(Panopticon.class);
+    Panopticon.panopticon = p;
+    Reporter r = mock(Reporter.class);
+    Reporter.report = r;
+    TestActorDriver test = loadClass("atc.BasicActorThreading").newInstance();
+    test.run();
+
+    InOrder inOrder = inOrder(p, r);
+    inOrder.verify(r).info("Beginning.");
+    inOrder.verify(p).setThreadStateToActor(anyObject());
+    inOrder.verify(r).info("Received.");
+    inOrder.verify(p).store(anyObject());
+    inOrder.verify(p).setThreadStateToThread();
+    inOrder.verify(r).info("Got back: Hi");
+    inOrder.verify(r).info("Done.");
 
   }
 
