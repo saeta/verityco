@@ -9,6 +9,7 @@ import verityco.util.Reporter;
 public class OwnershipVisitor extends AdviceAdapter {
 
   public static void setOwnership(Object actor, Object item) {
+    // TODO: move into the Panopticon
     Reporter.report.report("We are ownering " + item + " with acto " + actor);
   }
 
