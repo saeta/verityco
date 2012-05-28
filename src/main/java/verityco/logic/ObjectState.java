@@ -19,8 +19,9 @@ public class ObjectState {
   public void write(Object writingActor, Object obj) {
     if (state == ObjectStateEnum.PRISTINE || state == ObjectStateEnum.READ
         || state == ObjectStateEnum.WRITE) {
-      if (owningActor == writingActor) {
+      if (owningActor == null || owningActor == writingActor) {
         state = ObjectStateEnum.WRITE;
+        owningActor = writingActor;
       } else {
         if (state == ObjectStateEnum.WRITE) {
           Reporter.report.reportWriteWriteConflict(writingActor, owningActor,
@@ -39,8 +40,9 @@ public class ObjectState {
 
   public void read(Object readingActor, Object obj) {
     if (state == ObjectStateEnum.PRISTINE || state == ObjectStateEnum.READ) {
-      if (owningActor == readingActor) {
+      if (owningActor == null || owningActor == readingActor) {
         state = ObjectStateEnum.READ;
+        owningActor = readingActor;
       } else {
         state = ObjectStateEnum.MULTIREAD;
       }

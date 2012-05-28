@@ -10,6 +10,7 @@ import org.mockito.InOrder;
 import verityco.logic.Panopticon;
 import verityco.util.Reporter;
 import atc.TestActorDriver;
+import atc.TestActorDriverExtended;
 import static org.mockito.Matchers.anyObject;
 
 import static org.mockito.Mockito.*;
@@ -36,7 +37,8 @@ public class ClassVisitorTest {
   public void basicReporting() throws Exception {
     Reporter r = mock(Reporter.class);
     Reporter.report = r;
-    TestActorDriver test = loadClass("atc.BasicReporting").newInstance();
+    TestActorDriver test = (TestActorDriver) loadClass("atc.BasicReporting")
+        .newInstance();
     test.run();
 
     verify(r).info("Hello world");
@@ -46,7 +48,8 @@ public class ClassVisitorTest {
   public void trivialPanopticon() throws Exception {
     Panopticon p = mock(Panopticon.class);
     Panopticon.panopticon = p;
-    TestActorDriver test = loadClass("atc.TrivialPanopticon").newInstance();
+    TestActorDriver test = (TestActorDriver) loadClass("atc.TrivialPanopticon")
+        .newInstance();
     test.run();
 
     verifyNoMoreInteractions(p);
@@ -59,7 +62,8 @@ public class ClassVisitorTest {
     Panopticon.panopticon = p;
     Reporter r = mock(Reporter.class);
     Reporter.report = r;
-    TestActorDriver test = loadClass("atc.BasicActorThreading").newInstance();
+    TestActorDriver test = (TestActorDriver) loadClass(
+        "atc.BasicActorThreading").newInstance();
     test.run();
 
     InOrder inOrder = inOrder(p, r);
@@ -77,12 +81,25 @@ public class ClassVisitorTest {
 
   }
 
-  @SuppressWarnings("unchecked")
-  private Class<TestActorDriver> loadClass(final String className)
-      throws ClassNotFoundException {
+  @Test
+  public void readWriteTest() throws Exception {
+    Panopticon.panopticon = new Panopticon();
+    Reporter r = mock(Reporter.class);
+    Reporter.report = r;
+    // Reporter.report = new Reporter();
+    TestActorDriverExtended test = (TestActorDriverExtended) loadClass(
+        "atc.ReadWriteActorThreading").newInstance();
+    test.run();
+
+    verify(r).reportReadWriteConflict(test.getActorPointer("writer"),
+        test.getActorPointer("reader"), test.getMessage("msg"));
+  }
+
+  @SuppressWarnings("rawtypes")
+  private Class loadClass(final String className) throws ClassNotFoundException {
     ClassLoader cl = new VerityTestClassLoader(getClass().getClassLoader(),
         interfaceSet);
-    return (Class<TestActorDriver>) cl.loadClass(className);
+    return cl.loadClass(className);
   }
 
 }
