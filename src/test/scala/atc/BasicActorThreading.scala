@@ -9,6 +9,7 @@ import akka.dispatch.Await
 
 class TestingActor extends UntypedActor {
   override def onReceive(o: Any): Unit = o match {
+    case s: String => // Do nothing
     case m: java.util.Map[String, String] =>
       Reporter.report.info("Received.")
       m.put("Hello", "world")
@@ -25,6 +26,8 @@ class BasicActorThreading extends TestActorDriver {
     Reporter.report.info("Created actor system.")
 
     val actor = TestActorRef[TestingActor]
+    actor.tell("hello world")
+    Reporter.report.info("Just finished telling.")
 
     val myMap = new java.util.HashMap[String, String]()
     val res = Await.result(actor ? myMap, 1 seconds).asInstanceOf[String]

@@ -23,16 +23,14 @@ public class VClassVisitor extends ClassVisitor {
   @Override
   public MethodVisitor visitMethod(int access, String name, String desc,
       String signature, String[] exceptions) {
+    // Call down the chain.
     MethodVisitor mv = cv
         .visitMethod(access, name, desc, signature, exceptions);
-    if (name.equals("<init>") && visitingActor) {
 
+    if ((name.equals("<init>") && visitingActor) || name.equals("onReceive")) {
       mv = new ThreadStateVisitor(access, name, desc, mv);
-    } else if (name.equals("onReceive")) {
-      mv = new ThreadStateVisitor(access, name, desc, mv);
-      mv = new OwnershipVisitor(access, name, desc, mv);
     }
-
+    mv = new OwnershipVisitor(mv);
     mv = new LoadStoreVisitor(mv); // Always instrument load/stores last.
     mv = new JavaCoreVisitor(mv); // Always instrument around the Java core
     return mv;

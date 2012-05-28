@@ -64,6 +64,9 @@ public class ClassVisitorTest {
 
     InOrder inOrder = inOrder(p, r);
     inOrder.verify(r).info("Beginning.");
+    inOrder.verify(r).info("Created actor system.");
+    inOrder.verify(p).chownObject(anyObject(), anyObject());
+    inOrder.verify(r).info("Just finished telling.");
     inOrder.verify(p).setThreadStateToActor(anyObject());
     inOrder.verify(r).info("Received.");
     inOrder.verify(p).store(anyObject());

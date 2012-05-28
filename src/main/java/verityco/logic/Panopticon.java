@@ -46,6 +46,16 @@ public class Panopticon {
     ThreadState.threadState.set(null);
   }
 
+  public void chownObject(Object obj, Object actor) {
+    if (objects.containsKey(obj)) {
+      objects.get(obj).setOwning(actor);
+    } else {
+      ObjectState val = new ObjectState();
+      val.setOwning(actor);
+      objects.put(obj, val);
+    }
+  }
+
   WeakIdentityHashMap<Object, ObjectState> objects = new WeakIdentityHashMap<Object, ObjectState>();
 
 }
