@@ -1,6 +1,6 @@
 package atc;
 
-public class BasicPanopticon implements TestActorDriver {
+public class TrivialPanopticon implements TestActorDriver {
 
   @Override
   public void run() {

@@ -42,13 +42,12 @@ public class ClassVisitorTest {
   }
 
   @Test
-  public void basicPanopticon() throws Exception {
+  public void trivialPanopticon() throws Exception {
     Panopticon p = mock(Panopticon.class);
     Panopticon.panopticon = p;
-    TestActorDriver test = loadClass("atc.BasicPanopticon").newInstance();
+    TestActorDriver test = loadClass("atc.TrivialPanopticon").newInstance();
     test.run();
 
-    verify(p).loadStatic(); // Loading of System.out
     verifyNoMoreInteractions(p);
 
   }
@@ -63,6 +62,7 @@ public class ClassVisitorTest {
     test.run();
 
     InOrder inOrder = inOrder(p, r);
+    verify(r, never()).report((String) anyObject());
     inOrder.verify(r).info("Beginning.");
     inOrder.verify(r).info("Created actor system.");
     inOrder.verify(p).chownObject(anyObject(), anyObject());
