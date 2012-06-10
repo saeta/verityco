@@ -145,6 +145,22 @@ public class ClassVisitorTest {
     inOrder.verify(r).info("Done with test.");
   }
 
+  @Test
+  public void fullASTest1() throws Exception {
+    Panopticon p = mock(Panopticon.class);
+    Panopticon.panopticon = p;
+    Reporter r = mock(Reporter.class);
+    Reporter.report = r;
+    TestActorDriver test = (TestActorDriver) loadClass(
+        "atc.FullActorSystemTest").newInstance();
+    test.run();
+
+    verify(r, never()).report((String) anyObject());
+    verify(r, never()).info("Error!");
+    verify(r).info("hw1");
+    verify(r).info("hw2");
+  }
+
   @SuppressWarnings("rawtypes")
   private Class loadClass(final String className) throws ClassNotFoundException {
     ClassLoader cl = new VerityTestClassLoader(getClass().getClassLoader(),

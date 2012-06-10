@@ -23,10 +23,14 @@ public class VClassVisitor extends ClassVisitor {
     cv.visit(version, access, name, signature, superName, interfaces);
     if (superName.equals("akka/actor/UntypedActor")) {
       visitingActor = true;
+    } else {
+      visitingActor = false;
     }
 
     if (name.contains("$$anonfun$receive$")) {
       visitingReceiveFunction = true;
+    } else {
+      visitingReceiveFunction = false;
     }
   }
 
