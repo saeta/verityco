@@ -6,6 +6,12 @@ import org.objectweb.asm.Opcodes;
 
 public class VClassVisitor extends ClassVisitor {
   public boolean visitingActor = false;
+  /*
+   * The scala API defines the "receive" is a function that returns a partial
+   * function from Any to Nothing. We thus capture classes that are the compiled
+   * forms of these functions, and we instrument them appropriately too. :-D
+   */
+  public boolean visitingReceiveFunction = false;
 
   public VClassVisitor(ClassVisitor cv) {
     super(Opcodes.ASM4, cv);
@@ -18,6 +24,10 @@ public class VClassVisitor extends ClassVisitor {
     if (superName.equals("akka/actor/UntypedActor")) {
       visitingActor = true;
     }
+
+    if (name.contains("$$anonfun$receive$")) {
+      visitingReceiveFunction = true;
+    }
   }
 
   @Override
@@ -27,7 +37,8 @@ public class VClassVisitor extends ClassVisitor {
     MethodVisitor mv = cv
         .visitMethod(access, name, desc, signature, exceptions);
 
-    if ((name.equals("<init>") && visitingActor) || name.equals("onReceive")) {
+    if ((name.equals("<init>") && visitingActor) || name.equals("onReceive")
+        || (visitingReceiveFunction && name.equals("apply"))) {
       mv = new ThreadStateVisitor(access, name, desc, mv);
     }
     mv = new OwnershipVisitor(mv);

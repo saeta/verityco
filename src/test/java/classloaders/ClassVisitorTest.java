@@ -110,20 +110,37 @@ public class ClassVisitorTest {
     inOrder.verify(r).info("Beginning.");
 
     inOrder.verify(p).chownObject(anyObject(), anyObject());
-    inOrder.verify(r).info("Just finished telling, 1.");
-    inOrder.verify(p).setThreadStateToActor(anyObject());
+    inOrder.verify(p, atLeastOnce()).setThreadStateToActor(anyObject());
     inOrder.verify(r).info("Received.");
     inOrder.verify(r).info("hello world 1");
     inOrder.verify(r).info("Done.");
-    inOrder.verify(p).setThreadStateToThread();
+    inOrder.verify(p, atLeastOnce()).setThreadStateToThread();
+    inOrder.verify(r).info("Just finished telling, 1.");
+
+    inOrder.verify(r).info("Done with test.");
+  }
+
+  @Test
+  public void scalaBasicTest2() throws Exception {
+    Panopticon p = mock(Panopticon.class);
+    Panopticon.panopticon = p;
+    Reporter r = mock(Reporter.class);
+    Reporter.report = r;
+    TestActorDriver test = (TestActorDriver) loadClass("atc.ScalaBasicTest2")
+        .newInstance();
+    test.run();
+
+    InOrder inOrder = inOrder(p, r);
+    verify(r, never()).report((String) anyObject());
+    inOrder.verify(r).info("Beginning.");
 
     inOrder.verify(p).chownObject(anyObject(), anyObject());
-    inOrder.verify(r).info("Just finished telling, 2.");
-    inOrder.verify(p).setThreadStateToActor(anyObject());
+    inOrder.verify(p, atLeastOnce()).setThreadStateToActor(anyObject());
     inOrder.verify(r).info("Received.");
     inOrder.verify(r).info("hello world 2");
     inOrder.verify(r).info("Done.");
-    inOrder.verify(p).setThreadStateToThread();
+    inOrder.verify(p, atLeastOnce()).setThreadStateToThread();
+    inOrder.verify(r).info("Just finished telling, 2.");
 
     inOrder.verify(r).info("Done with test.");
   }

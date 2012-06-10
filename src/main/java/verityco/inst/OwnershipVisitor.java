@@ -23,6 +23,16 @@ public class OwnershipVisitor extends MethodVisitor {
       mv.visitMethodInsn(Opcodes.INVOKESTATIC,
           "verityco/inst/OwnershipVisitor", "toPanopticon",
           "(Ljava/lang/Object;Ljava/lang/Object;)V");
+    } else if ((owner.equals("akka/actor/ActorRef") || owner
+        .equals("akka/testkit/TestActorRef")) && name.equals("$bang")) {
+      mv.visitInsn(Opcodes.DUP_X2);
+      mv.visitInsn(Opcodes.POP);
+      mv.visitInsn(Opcodes.DUP2);
+      mv.visitMethodInsn(Opcodes.INVOKESTATIC,
+          "verityco/inst/OwnershipVisitor", "toPanopticon",
+          "(Ljava/lang/Object;Ljava/lang/Object;)V");
+      mv.visitInsn(Opcodes.DUP2_X1);
+      mv.visitInsn(Opcodes.POP2);
     }
     mv.visitMethodInsn(opcode, owner, name, desc);
   }

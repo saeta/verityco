@@ -30,6 +30,20 @@ class ScalaBasicTest extends TestActorDriver {
     actor.tell("hello world 1")
     Reporter.report.info("Just finished telling, 1.")
 
+    as.shutdown() // Prevent leak of threads / memory
+    Reporter.report.info("Done with test.")
+  }
+}
+
+class ScalaBasicTest2 extends TestActorDriver {
+  implicit val timeout = Timeout(1 seconds)
+
+  override def run() = {
+    Reporter.report.info("Beginning.")
+    implicit val as = ActorSystem("basic-factor-testing")
+
+    val actor = TestActorRef[SBTestingActor]
+
     actor ! "hello world 2"
     Reporter.report.info("Just finished telling, 2.")
 
